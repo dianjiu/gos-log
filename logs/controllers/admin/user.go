@@ -8,9 +8,21 @@ type UserController struct {
 	beego.Controller
 }
 
-//测试路由
+//Test 测试路由
 func (this *UserController) Test() {
 	this.Ctx.WriteString("这是正则路由 user/test")
+}
+
+//Console 控制台
+func (this *UserController) Console() {
+	//this.Ctx.WriteString("这是正则路由 user/test")
+	this.TplName = "console.html"
+}
+
+//Console 控制台
+func (this *UserController) ToLogin() {
+	//this.Ctx.WriteString("这是正则路由 user/test")
+	this.TplName = "login.html"
 }
 
 //Login 用户登陆接口

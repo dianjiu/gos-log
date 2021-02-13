@@ -15,3 +15,13 @@
 ## 备注说明
 1. 先启动服务端再启动客户端
 2. 一台客户端服务器对应唯一一个服务端后台客户端配置
+
+## 项目截图
+### 控制台
+![控制台](./logs/static/img/index.jpg "控制台")
+### 客户端
+![客户端](./logs/static/img/client.jpg "客户端")
+### 项目管理
+![项目管理](./logs/static/img/item.jpg "项目管理")
+### 日志查找
+![日志查找](./logs/static/img/logs.jpg "日志查找")
