@@ -2,6 +2,7 @@ package admin
 
 import (
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 )
 
 type UserController struct {
@@ -10,6 +11,16 @@ type UserController struct {
 
 //Test 测试路由
 func (this *UserController) Test() {
+	l := logs.GetLogger()
+	l.Println("this is a message of http")
+	//an official log.Logger with prefix ORM
+	logs.GetLogger("ORM").Println("this is a message of orm")
+	// TODO 代办测试
+	logs.Debug("my book is bought in the year of ", 2016)
+	logs.Info("this %s cat is %v years old", "yellow", 3)
+	logs.Warn("json is a type of kv like", map[string]int{"key": 2016})
+	logs.Error(1024, "is a very", "good game")
+	logs.Critical("oh,crash")
 	this.Ctx.WriteString("这是正则路由 user/test")
 }
 

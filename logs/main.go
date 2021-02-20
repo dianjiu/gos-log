@@ -1,9 +1,25 @@
 package main
 
 import (
-	"github.com/astaxie/beego"
+	models "logs/models"
 	_ "logs/routers"
+
+	"github.com/astaxie/beego"
 )
+
+func init() {
+	//初始化数据链接
+	db := models.DBConfig{
+		Host:         "127.0.0.1",
+		Port:         "5432",
+		Username:     "postgres",
+		Password:     "123456",
+		Database:     "logs",
+		MaxIdleConns: 10,
+		MaxOpenConns: 50,
+	}
+	models.NewClientManager(&db)
+}
 
 func main() {
 	beego.Run()

@@ -1,12 +1,13 @@
 package routers
 
 import (
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
 	"logs/controllers/admin"
 	"logs/controllers/client"
 	"logs/controllers/item"
 	"logs/controllers/logs"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
 )
 
 func init() {
@@ -19,6 +20,7 @@ func init() {
 	beego.Router("/admin/login", &admin.UserController{}, "*:Login")
 	beego.Router("/admin/exit", &admin.UserController{}, "*:Exit")
 	beego.Router("/client/index", &client.ClientController{}, "*:Index")
+	beego.Router("/client/add", &client.ClientController{}, "*:Add")
 	beego.Router("/item/index", &item.ItemController{}, "*:Index")
 	beego.Router("/logs/index", &logs.LogsController{}, "*:Index")
 }
