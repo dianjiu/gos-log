@@ -3,7 +3,6 @@ package client
 import (
 	"fmt"
 	models "logs/models"
-	"strconv"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -11,6 +10,13 @@ import (
 
 type ClientController struct {
 	beego.Controller
+}
+
+type Resp struct {
+	//必须的大写开头
+	Code string      `json:"code"`
+	Msg  string      `json:"msg"`
+	Data models.Page `json:"data"`
 }
 
 //Console 控制台
@@ -34,5 +40,38 @@ func (this *ClientController) Add() {
 	c.UpdatedTime = time.Now()
 	id, err := models.AddClient(&c)
 	fmt.Printf("ID: %d, ERR: %v\n", id, err)
-	this.Ctx.WriteString("客户端新增成功# " + strconv.Itoa(int(id)))
+	data := Resp{"200", "客户端新增成功", nil}
+	this.Data["json"] = &data
+	this.ServeJSON()
+}
+
+func (this *ClientController) Delete() {
+	id, _ := this.GetInt64("id")
+	models.DeleteClient(id)
+	data := Resp{"200", "删除客户端成功", nil}
+	this.Data["json"] = &data
+	this.ServeJSON()
+}
+
+func (this *ClientController) Update() {
+	client := models.TClient{}
+	models.UpdateClient(&client)
+	data := Resp{"200", "更新客户端成功", nil}
+	this.Data["json"] = &data
+	this.ServeJSON()
+}
+
+func (this *ClientController) QueryAll() {
+	clients, _ := models.QueryAllClient()
+	this.Data["json"] = &clients
+	this.ServeJSON()
+}
+
+func (this *ClientController) QueryPage() {
+	pageNum, _ := this.GetInt("pageNum")
+	pageSize, _ := this.GetInt("pageSize")
+	page := models.QueryPageClient(pageNum, pageSize)
+	data := Resp{"200", "分页查询客户端成功", page}
+	this.Data["json"] = &data
+	this.ServeJSON()
 }

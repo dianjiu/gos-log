@@ -21,6 +21,10 @@ func init() {
 	beego.Router("/admin/exit", &admin.UserController{}, "*:Exit")
 	beego.Router("/client/index", &client.ClientController{}, "*:Index")
 	beego.Router("/client/add", &client.ClientController{}, "*:Add")
+	beego.Router("/client/delete", &client.ClientController{}, "*:Delete")
+	beego.Router("/client/update", &client.ClientController{}, "*:Update")
+	beego.Router("/client/queryAll", &client.ClientController{}, "*:QueryAll")
+	beego.Router("/client/queryPage", &client.ClientController{}, "*:QueryPage")
 	beego.Router("/item/index", &item.ItemController{}, "*:Index")
 	beego.Router("/logs/index", &logs.LogsController{}, "*:Index")
 }
