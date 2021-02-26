@@ -94,11 +94,33 @@ func UpdateClient(client *TClient) (int64, error) {
 		c.Vkey = client.Vkey
 		c.Info = client.Info
 		c.Zip = client.Zip
-		c.Online = client.Online
+		c.Online = c.Online
 		c.Status = client.Status
 		c.UpdatedTime = time.Now()
 		// 修改操作，返回值为受影响的行数
 		if num, err := o.Update(&c); err == nil {
+			fmt.Println("update return num : ", num)
+			return num, err
+		}
+	}
+	return 0, err
+}
+
+//UpdateClient 更新客户端，先查后改
+func ChangeStatus(id int64) (int64, error) {
+	o := orm.NewOrm()
+	c := TClient{}
+	c.Id = id
+	err := o.Read(&c)
+	if o.Read(&c) == nil {
+		if "1" == c.Status {
+			c.Status = "0"
+		} else {
+			c.Status = "1"
+		}
+		c.UpdatedTime = time.Now()
+		// 修改操作，返回值为受影响的行数
+		if num, err := o.Update(&c, "Status", "UpdatedTime"); err == nil {
 			fmt.Println("update return num : ", num)
 			return num, err
 		}

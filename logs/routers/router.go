@@ -14,7 +14,7 @@ func init() {
 	beego.InsertFilter("*", beego.BeforeRouter, cors.Allow(&cors.Options{
 		AllowAllOrigins:  true,
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type", "X-Token", "X-Requested-With"},
+		AllowHeaders:     []string{"Origin", "Authorization", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type", "X-Token", "X-Requested-With", "withCredentials"},
 		ExposeHeaders:    []string{"Content-Length", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers", "Content-Type"},
 		AllowCredentials: true,
 	}))
@@ -30,8 +30,9 @@ func init() {
 	beego.Router("/client/add", &client.ClientController{}, "*:Add")
 	beego.Router("/client/delete", &client.ClientController{}, "*:Delete")
 	beego.Router("/client/update", &client.ClientController{}, "*:Update")
-	beego.Router("/client/queryAll", &client.ClientController{}, "*:QueryAll")
+	beego.Router("/client/changeStatus", &client.ClientController{}, "*:ChangeStatus")
 	beego.Router("/client/query", &client.ClientController{}, "*:Query")
+	beego.Router("/client/queryAll", &client.ClientController{}, "*:QueryAll")
 	beego.Router("/client/queryPage", &client.ClientController{}, "*:QueryPage")
 	beego.Router("/item/index", &item.ItemController{}, "*:Index")
 	beego.Router("/logs/index", &logs.LogsController{}, "*:Index")
