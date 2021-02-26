@@ -1,95 +1,95 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/static/assets/css/layui.css">
-    <link rel="stylesheet" href="/static/assets/css/view.css"/>
-    <link rel="icon" href="/favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" href="/static/assets/css/layui.css" />
+    <link rel="stylesheet" href="/static/assets/css/view.css" />
+    <link rel="icon" href="/favicon.ico" />
     <title>日志检索中台</title>
-</head>
-<body class="layui-view-body">
+  </head>
+  <body class="layui-view-body">
     <div class="layui-content">
-        <div class="layui-row">
-            <div class="layui-card">
-                <div class="layui-card-body">
-                    <div class="form-box">
-                        <div class="layui-form layui-form-item">
-                            <div class="layui-inline">
-                                <div class="layui-form-mid">客户端IP:</div>
-                                <div class="layui-input-inline" style="width: 100px;">
-                                  <input type="text" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-mid">客户端Port:</div>
-                                <div class="layui-input-inline" style="width: 100px;">
-                                    <input type="text" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="layui-form-mid">客户端备注:</div>
-                                <div class="layui-input-inline" style="width: 100px;">
-                                    <input type="text" autocomplete="off" class="layui-input">
-                                </div>
-                                <button class="layui-btn layui-btn-blue">查询</button>
-                            </div>
-                            <div class="layui-inline" style="float: right">
-                                <button class="layui-btn layui-btn-blue"><i class="layui-icon">&#xe654;</i>新增客户端</button>
-                            </div>
-                        </div>
-                        <table id="client"></table>
-                    </div>
+      <div class="layui-row">
+        <div class="layui-card">
+          <div class="layui-card-body">
+            <div class="form-box">
+              <div class="layui-form layui-form-item">
+                <div class="layui-inline">
+                  <div class="layui-form-mid">客户端IP:</div>
+                  <div class="layui-input-inline" style="width: 100px">
+                    <input type="text" autocomplete="off" class="layui-input" />
+                  </div>
+                  <div class="layui-form-mid">客户端Port:</div>
+                  <div class="layui-input-inline" style="width: 100px">
+                    <input type="text" autocomplete="off" class="layui-input" />
+                  </div>
+                  <div class="layui-form-mid">客户端备注:</div>
+                  <div class="layui-input-inline" style="width: 100px">
+                    <input type="text" autocomplete="off" class="layui-input" />
+                  </div>
+                  <button class="layui-btn layui-btn-blue">查询</button>
                 </div>
+                <div class="layui-inline" style="float: right">
+                  <button class="layui-btn layui-btn-blue">
+                    <i class="layui-icon">&#xe654;</i>新增客户端
+                  </button>
+                </div>
+              </div>
+              <table id="client"></table>
             </div>
+          </div>
         </div>
+      </div>
     </div>
     <script src="/static/assets/layui.all.js"></script>
     <script>
       var element = layui.element;
-  var table = layui.table;
-  var form = layui.form;
+      var table = layui.table;
+      var form = layui.form;
 
-  //展示已知数据
-  table.render({
-    elem: '#client'
-    ,cols: [[ //标题栏
-      {field: 'id', title: 'ID', width: 80, sort: true}
-      ,{field: 'ip', title: 'IP', minWidth: 100}
-      ,{field: 'port', title: 'Port', minWidth: 100}
-      ,{field: 'vkey', title: '密钥', width: 150}
-      ,{field: 'info', title: '备注', width: 200}
-      ,{field: 'zip', title: '压缩', width: 100}
-      ,{field: 'online', title: '在线', width: 100}
-      ,{field: 'status', title: '有效', width: 100}
-    ]]
-    ,data: [{
-      "id": "10001"
-      ,"ip": "127.0.0.2"
-      ,"port": "2020"
-      ,"vkey": "123456"
-      ,"info": "服务1"
-      ,"zip": "是"
-      ,"online": "在线"
-    }, {
-      "id": "10002"
-      ,"ip": "127.0.0.3"
-      ,"port": "2020"
-      ,"vkey": "123456"
-      ,"info": "服务2"
-      ,"zip": "是"
-      ,"online": "在线"
-    }, {
-      "id": "10003"
-      ,"ip": "127.0.0.3"
-      ,"port": "2020"
-      ,"vkey": "123456"
-      ,"zip": "是"
-      ,"online": "在线"
-    }]
-    ,skin: 'line' //表格风格
-    ,even: true
-    ,page: true //是否显示分页
-    ,limits: [5, 7, 10]
-    ,limit: 2 //每页默认显示的数量
-  });
+      //展示已知数据
+      table.render({
+        elem: "#client",
+        cols: [
+          [
+            //标题栏
+            { field: "id", title: "ID", width: 80, sort: true },
+            { field: "ip", title: "IP", minWidth: 100 },
+            { field: "port", title: "Port", minWidth: 100 },
+            { field: "vkey", title: "密钥", width: 150 },
+            { field: "info", title: "备注", width: 200 },
+            { field: "zip", title: "压缩", width: 100 },
+            { field: "online", title: "在线", width: 100 },
+            { field: "status", title: "有效", width: 100 },
+          ],
+        ],
+        skin: "line", //表格风格
+        even: true,
+        page: true, //是否显示分页
+        count: 0,
+        limits: [5, 10, 20], //每页条数的选择项
+        limit: 5, //每页默认显示的数量
+        prev: "上一页",
+        next: "下一页",
+        first: "首页",
+        url: "/client/queryPage",
+        method: "post",
+        parseData: function (res) {
+          //res 即为原始返回的数据
+          return {
+            code: res.code, //解析接口状态
+            msg: res.msg, //解析提示文本
+            count: res.data.totalCount, //解析数据长度
+            data: res.data.list, //解析数据列表
+          };
+        },
+        //loading: true, //请求数据时，是否显示loading
+      });
     </script>
-</body>
+  </body>
 </html>

@@ -21,26 +21,25 @@ type Resp struct {
 
 //Console 控制台
 func (this *ClientController) Index() {
-	//this.Ctx.WriteString("这是正则路由 user/test")
 	this.TplName = "client.html"
 }
 
 func (this *ClientController) Add() {
 	c := models.TClient{}
-	c.Ip = "127.0.0.1"
-	c.Port = "2020"
-	c.Vkey = "123456"
-	c.Info = "本地客户端"
-	c.Zip = "1"
-	c.Online = "0"
-	c.Status = "1"
+	c.Ip = this.GetString("ip")
+	c.Port = this.GetString("port")
+	c.Vkey = this.GetString("vkey")
+	c.Info = this.GetString("info")
+	c.Zip = this.GetString("zip")
+	c.Online = this.GetString("online")
+	c.Status = this.GetString("status")
 	c.CreatedBy = "admin"
 	c.CreatedTime = time.Now()
 	c.UpdatedBy = "admin"
 	c.UpdatedTime = time.Now()
 	id, err := models.AddClient(&c)
 	fmt.Printf("ID: %d, ERR: %v\n", id, err)
-	data := Resp{"200", "客户端新增成功", nil}
+	data := Resp{"200", "客户端新增成功", models.Page{}}
 	this.Data["json"] = &data
 	this.ServeJSON()
 }
@@ -48,7 +47,14 @@ func (this *ClientController) Add() {
 func (this *ClientController) Delete() {
 	id, _ := this.GetInt64("id")
 	models.DeleteClient(id)
-	data := Resp{"200", "删除客户端成功", nil}
+	data := Resp{"200", "删除客户端成功", models.Page{}}
+	this.Data["json"] = &data
+	this.ServeJSON()
+}
+func (this *ClientController) Query() {
+	id, _ := this.GetInt64("id")
+	models.ReadClient(id)
+	data := Resp{"200", "查询客户端成功", models.Page{}}
 	this.Data["json"] = &data
 	this.ServeJSON()
 }
@@ -56,7 +62,7 @@ func (this *ClientController) Delete() {
 func (this *ClientController) Update() {
 	client := models.TClient{}
 	models.UpdateClient(&client)
-	data := Resp{"200", "更新客户端成功", nil}
+	data := Resp{"200", "更新客户端成功", models.Page{}}
 	this.Data["json"] = &data
 	this.ServeJSON()
 }
@@ -68,8 +74,8 @@ func (this *ClientController) QueryAll() {
 }
 
 func (this *ClientController) QueryPage() {
-	pageNum, _ := this.GetInt("pageNum")
-	pageSize, _ := this.GetInt("pageSize")
+	pageNum, _ := this.GetInt("page")
+	pageSize, _ := this.GetInt("limit")
 	page := models.QueryPageClient(pageNum, pageSize)
 	data := Resp{"200", "分页查询客户端成功", page}
 	this.Data["json"] = &data

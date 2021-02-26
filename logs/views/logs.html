@@ -1,82 +1,88 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/static/assets/css/layui.css">
-    <link rel="stylesheet" href="/static/assets/css/view.css"/>
-    <link rel="icon" href="/favicon.ico">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <link rel="stylesheet" href="/static/assets/css/layui.css" />
+    <link rel="stylesheet" href="/static/assets/css/view.css" />
+    <link rel="icon" href="/favicon.ico" />
     <title>日志检索中台</title>
-</head>
-<style>
-    .dianjiu-div-input{
-        margin: 20px 50px;
-        width: 200px;
-        display: inline-block;
+  </head>
+  <style>
+    .dianjiu-div-input {
+      margin: 20px 50px;
+      width: 200px;
+      display: inline-block;
     }
-    .dianjiu-div-span{
-        display: inline-block;
-        width: 50px;
+    .dianjiu-div-span {
+      display: inline-block;
+      width: 50px;
     }
-</style>
-<body class="layui-view-body">
-<div class="layui-content">
-    <div class="layui-row">
+  </style>
+  <body class="layui-view-body">
+    <div class="layui-content">
+      <div class="layui-row">
         <div class="layui-card">
-            <div class="layui-card-body">
-                <div class="form-box">
-                    <div class="layui-form layui-form-item">
-                        <div>
-                            <span class="dianjiu-div-span">客户端:</span>
-                            <div class="dianjiu-div-input">
-                            <select name="client">
-                                <option value="1000">全部</option>
-                                <option value="1001">客户端1</option>
-                                <option value="1002">客户端2</option>
-                            </select>
-                        </div>
-                        </div>
-                        <div>
-                            <span class="dianjiu-div-span">项目:</span>
-                            <div class="dianjiu-div-input">
-                                <select name="item">
-                                    <option value="1001">好诊所项目1</option>
-                                    <option value="1002">好诊所项目2</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <span class="dianjiu-div-span">日期:</span>
-                            <div class="dianjiu-div-input">
-                                <input type="text" class="layui-input" id="test1">
-                            </div>
-                        </div>
-                        <div>
-                            <span class="dianjiu-div-span">关键字:</span>
-                            <div class="dianjiu-div-input">
-                                <input type="text" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <button class="layui-btn layui-btn-blue" style="width: 302px">开始查询</button>
-                    </div>
+          <div class="layui-card-body">
+            <div class="form-box">
+              <div class="layui-form layui-form-item">
+                <div>
+                  <span class="dianjiu-div-span">客户端:</span>
+                  <div class="dianjiu-div-input">
+                    <select name="client">
+                      <option value="1000">全部</option>
+                      <option value="1001">客户端1</option>
+                      <option value="1002">客户端2</option>
+                    </select>
+                  </div>
                 </div>
+                <div>
+                  <span class="dianjiu-div-span">项目:</span>
+                  <div class="dianjiu-div-input">
+                    <select name="item">
+                      <option value="1001">好诊所项目1</option>
+                      <option value="1002">好诊所项目2</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <span class="dianjiu-div-span">日期:</span>
+                  <div class="dianjiu-div-input">
+                    <input type="text" class="layui-input" id="test1" />
+                  </div>
+                </div>
+                <div>
+                  <span class="dianjiu-div-span">关键字:</span>
+                  <div class="dianjiu-div-input">
+                    <input type="text" autocomplete="off" class="layui-input" />
+                  </div>
+                </div>
+                <button class="layui-btn layui-btn-blue" style="width: 302px">
+                  开始查询
+                </button>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<script src="/static/assets/layui.all.js"></script>
-<script>
-    var element = layui.element;
-    var form = layui.form;
-    layui.use('laydate', function () {
+    <script src="/static/assets/layui.all.js"></script>
+    <script>
+      var element = layui.element;
+      var form = layui.form;
+      layui.use("laydate", function () {
         var laydate = layui.laydate;
 
         //执行一个laydate实例
         laydate.render({
-            elem: '#test1' //指定元素
+          elem: "#test1", //指定元素
+          trigger: "click",
         });
-    });
-</script>
-</body>
+      });
+    </script>
+  </body>
 </html>

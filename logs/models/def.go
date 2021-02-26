@@ -36,13 +36,13 @@ type TItem struct {
 
 //Page 分页
 type Page struct {
-	PageNo     int
-	PageSize   int
-	TotalPage  int
-	TotalCount int
-	FirstPage  bool
-	LastPage   bool
-	List       interface{}
+	PageNo     int         `json:"pageNo"`
+	PageSize   int         `json:"pageSize"`
+	TotalPage  int         `json:"totalPage"`
+	TotalCount int         `json:"totalCount"`
+	FirstPage  bool        `json:"firstPage"`
+	LastPage   bool        `json:"lastPage"`
+	List       interface{} `json:"list"`
 }
 
 //PageUtil 分页工具
