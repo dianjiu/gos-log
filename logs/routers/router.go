@@ -7,7 +7,6 @@ import (
 	"logs/controllers/logs"
 
 	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/plugins/cors"
 )
 
@@ -20,7 +19,7 @@ func init() {
 		AllowCredentials: true,
 	}))
 	// 验证用户是否已经登录
-	beego.InsertFilter("/*", beego.BeforeExec, FilterUser)
+	// beego.InsertFilter("/*", beego.BeforeExec, FilterUser)
 	beego.Router("/", &admin.UserController{}, "*:Login")
 	beego.Router("/admin/test", &admin.UserController{}, "*:Test")
 	beego.Router("/admin/console", &admin.UserController{}, "*:Console")
@@ -38,10 +37,10 @@ func init() {
 	beego.Router("/logs/index", &logs.LogsController{}, "*:Index")
 }
 
-var FilterUser = func(ctx *context.Context) {
+/* var FilterUser = func(ctx *context.Context) {
 	_, ok := ctx.Input.Session("username").(string)
 
 	if !ok && ctx.Request.RequestURI != "/admin/login" {
 		ctx.Redirect(302, "/admin/login")
 	}
-}
+} */
