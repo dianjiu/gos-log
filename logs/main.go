@@ -18,7 +18,7 @@ func init() {
 		MaxIdleConns: 10,
 		MaxOpenConns: 50,
 	}
-	models.NewClientManager(&db)
+	models.NewDef(&db)
 }
 
 func main() {

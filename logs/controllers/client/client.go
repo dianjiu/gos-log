@@ -79,9 +79,9 @@ func (this *ClientController) Update() {
 	}
 }
 
-func (this *ClientController) ChangeStatus() {
+func (this *ClientController) ChangeClientStatus() {
 	id, _ := this.GetInt64("id")
-	models.ChangeStatus(id)
+	models.ChangeClientStatus(id)
 	data := ClientResp{"200", "更新客户端成功", models.TClient{}}
 	this.Data["json"] = &data
 	this.ServeJSON()

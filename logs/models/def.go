@@ -1,6 +1,13 @@
 package models
 
-import "time"
+import (
+	"fmt"
+	"time"
+
+	log "github.com/astaxie/beego/logs"
+	"github.com/astaxie/beego/orm"
+	_ "github.com/lib/pq"
+)
 
 //TClient 客户端
 type TClient struct {
@@ -45,6 +52,49 @@ type Page struct {
 	List       interface{} `json:"list"`
 }
 
+//DBConfig 数据相关配置
+type DBConfig struct {
+	Host         string
+	Port         string
+	Database     string
+	Username     string
+	Password     string
+	MaxIdleConns int //最大空闲连接
+	MaxOpenConns int //最大连接数
+}
+
+type Def struct {
+	DBConf *DBConfig
+}
+
+/*
+ * clientmanger构造器
+ */
+func NewDef(dbConf *DBConfig) *Def {
+	mgr := &Def{
+		DBConf: dbConf,
+	}
+	//初始化orm
+	mgr.initDB()
+	return mgr
+}
+
+/**
+  初始化db，注册默认数据库，同时将实体模型也注册上去
+*/
+func (mgr *Def) initDB() {
+	// 是否开启调试模式 调试模式下会打印出sql语句
+	orm.Debug = true
+	orm.RegisterDriver("postgres", orm.DRPostgres)
+	ds := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", mgr.DBConf.Host, mgr.DBConf.Port, mgr.DBConf.Username, mgr.DBConf.Password, mgr.DBConf.Database)
+	log.Info("datasource=[%s]", ds)
+	err := orm.RegisterDataBase("default", "postgres", ds, mgr.DBConf.MaxIdleConns, mgr.DBConf.MaxOpenConns)
+	if err != nil {
+		panic(err)
+	}
+	orm.RegisterModel(new(TClient), new(TItem))
+}
+
 //PageUtil 分页工具
 func PageUtil(count int, pageNo int, pageSize int, list interface{}) Page {
 	tp := count / pageSize
@@ -60,15 +110,4 @@ func PageUtil(count int, pageNo int, pageSize int, list interface{}) Page {
 		LastPage:   pageNo == tp,
 		List:       list,
 	}
-}
-
-//DBConfig 数据相关配置
-type DBConfig struct {
-	Host         string
-	Port         string
-	Database     string
-	Username     string
-	Password     string
-	MaxIdleConns int //最大空闲连接
-	MaxOpenConns int //最大连接数
 }
