@@ -111,6 +111,19 @@ func ReadItem(id int64) (item TItem) {
 	return item
 }
 
+// QueryItemsByClientId 根据客户端ID查询所有项目
+func QueryItemsByClientId(id int64) (*[]TItem, error) {
+	o := orm.NewOrm()
+	items := new([]TItem)
+	//查找全部
+	_, err := o.QueryTable("t_item").Filter("client_id", id).All(items)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	return items, nil
+}
+
 //QueryAllItem 查询所有的项目日志
 func QueryAllItem() (*[]TItem, error) {
 	o := orm.NewOrm()

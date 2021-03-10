@@ -27,6 +27,7 @@ func init() {
 	beego.Router("/admin/login", &admin.UserController{}, "*:Login")
 	beego.Router("/admin/exit", &admin.UserController{}, "*:Exit")
 	beego.Router("/client/index", &client.ClientController{}, "*:Index")
+	beego.Router("/client/register", &client.ClientController{}, "*:Register")
 	beego.Router("/client/add", &client.ClientController{}, "*:Add")
 	beego.Router("/client/delete", &client.ClientController{}, "*:Delete")
 	beego.Router("/client/update", &client.ClientController{}, "*:Update")
@@ -44,6 +45,9 @@ func init() {
 	beego.Router("/item/queryPage", &item.ItemController{}, "*:QueryPage")
 	beego.Router("/item/index", &item.ItemController{}, "*:Index")
 	beego.Router("/logs/index", &logs.LogsController{}, "*:Index")
+	beego.Router("/logs/query", &logs.LogsController{}, "*:Query")
+	beego.Router("/logs/queryClients", &logs.LogsController{}, "*:QueryClient")
+	beego.Router("/logs/queryItems", &logs.LogsController{}, "*:QueryItem")
 }
 
 /* var FilterUser = func(ctx *context.Context) {

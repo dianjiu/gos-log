@@ -112,12 +112,30 @@ func ReadClient(id int64) (client TClient) {
 	return client
 }
 
-//QueryAllClient 查询所有的客户端
-func QueryAllClient() (*[]TClient, error) {
+//ReadClient 根据Id查询客户端
+func CheckClient(ip, port, vkey string) (client TClient) {
 	o := orm.NewOrm()
-	clients := new([]TClient)
+	client.Ip = ip
+	client.Port = port
+	client.Vkey = vkey
+	err := o.Read(&client)
+	if err == orm.ErrNoRows {
+		fmt.Println("查询不到")
+	} else if err == orm.ErrMissPK {
+		fmt.Println("找不到主键")
+	} else {
+		fmt.Println(client)
+	}
+	return client
+}
+
+//QueryAllClient 查询所有的客户端
+func QueryAllClient() ([]TClient, error) {
+	o := orm.NewOrm()
+	// clients := new([]TClient)
+	var clients []TClient
 	//查找全部
-	_, err := o.QueryTable("t_client").All(clients)
+	_, err := o.QueryTable("t_client").All(&clients)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err

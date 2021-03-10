@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	models "logs/models"
+	"strings"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -25,6 +26,11 @@ type ClientResp struct {
 	Code string         `json:"code"`
 	Msg  string         `json:"msg"`
 	Data models.TClient `json:"data"`
+}
+
+type Register struct {
+	//必须的大写开头
+	VKey string `json:"key"`
 }
 
 //Console 控制台
@@ -77,6 +83,29 @@ func (this *ClientController) Update() {
 		this.Data["json"] = &data
 		this.ServeJSON()
 	}
+}
+
+func (this *ClientController) Register() {
+	// 获取请求的IP
+	req := this.Ctx.Request
+	addr := req.RemoteAddr // "IP:port"
+	s := strings.Split(addr, ":")
+	ip := s[0]
+	port := s[1]
+	// 获取请求参数
+	var register Register
+	reqBody := this.Ctx.Input.RequestBody
+	err := json.Unmarshal(reqBody, &register)
+	if err == nil {
+		//根据ip、port、vkey查询客户端的有效性
+		client := models.CheckClient(ip, port, register.VKey)
+		if client.Id != 0 {
+			models.ChangeClientStatus(client.Id)
+		}
+	}
+	data := ClientResp{"200", "客户端上线成功", models.TClient{}}
+	this.Data["json"] = &data
+	this.ServeJSON()
 }
 
 func (this *ClientController) ChangeClientStatus() {
