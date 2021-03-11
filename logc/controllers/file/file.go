@@ -50,6 +50,14 @@ func ReadString(filename string, key string, line int64) (file string) {
 	var lineBegin int64 = 0
 	var lineFirst int64 = 0
 	var lineOver int64 = 0
+	// 获取临时目录
+	temppath := beego.AppConfig.String("temppath")
+	// 把查找到的日志放到临时目录下 文件名以关键字命名
+	dstFile, err := os.OpenFile(temppath+key+".log", os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		log.Fatalf("open file failed, err:%v", err)
+	}
+	bufWriter := bufio.NewWriter(dstFile)
 	//首次便利记录出现行号
 	for {
 		str, err := r.ReadString('\n')
@@ -58,19 +66,28 @@ func ReadString(filename string, key string, line int64) (file string) {
 			break
 		}
 		if strings.Contains(str, key) {
-			fmt.Println(str)
-			lineFirst = lineBegin
-			lineBegin = lineBegin - line
-			lineOver = lineFirst + line
+			// fmt.Println(str)
+			if lineFirst == 0 && lineOver == 0 {
+				lineFirst = lineBegin
+				lineOver = lineFirst + line
+				fmt.Printf("lineFirst:%d\n", lineFirst)
+				fmt.Printf("lineBegin:%d\n", lineBegin)
+				fmt.Printf("lineOver:%d\n", lineOver)
+			}
+		}
+		// 暂不考虑lineOver 小于 over 的时候
+		if lineBegin <= lineOver {
+			bufWriter.WriteString(str)
+		}
+		if lineOver > 0 && lineBegin > lineOver {
 			break
 		}
 	}
+	bufWriter.Flush()
+	dstFile.Close()
 	fmt.Printf("查找耗时：%s\n", time.Now().Sub(startTime).String())
-	fmt.Printf("lineBegin:%d\n", lineBegin)
-	fmt.Printf("lineOver:%d\n", lineOver)
-	fmt.Printf("lineFirst:%d\n", lineFirst)
 	//二次遍历输出文件
-	startTimeTwo := time.Now()
+	/* startTimeTwo := time.Now()
 	var start int64 = 0
 	// 获取临时目录
 	temppath := beego.AppConfig.String("temppath")
@@ -99,7 +116,7 @@ func ReadString(filename string, key string, line int64) (file string) {
 	}
 	bufWriter.Flush()
 	dstFile.Close()
-	fmt.Printf("写出耗时：%s\n", time.Now().Sub(startTimeTwo).String())
+	fmt.Printf("写出耗时：%s\n", time.Now().Sub(startTimeTwo).String()) */
 	// 压缩
 	startTimeThree := time.Now()
 	ip := GetLocalIPv4()
