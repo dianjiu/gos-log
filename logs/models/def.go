@@ -6,7 +6,7 @@ import (
 
 	log "github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
-	_ "github.com/lib/pq"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 //TClient 客户端
@@ -85,10 +85,11 @@ func NewDef(dbConf *DBConfig) *Def {
 func (mgr *Def) initDB() {
 	// 是否开启调试模式 调试模式下会打印出sql语句
 	orm.Debug = true
-	orm.RegisterDriver("postgres", orm.DRPostgres)
+	// orm.RegisterDriver("postgres", orm.DRPostgres)
 	ds := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", mgr.DBConf.Host, mgr.DBConf.Port, mgr.DBConf.Username, mgr.DBConf.Password, mgr.DBConf.Database)
 	log.Info("datasource=[%s]", ds)
-	err := orm.RegisterDataBase("default", "postgres", ds, mgr.DBConf.MaxIdleConns, mgr.DBConf.MaxOpenConns)
+	// err := orm.RegisterDataBase("default", "postgres", ds, mgr.DBConf.MaxIdleConns, mgr.DBConf.MaxOpenConns)
+	err := orm.RegisterDataBase("default", "mysql", "root:123456@tcp(127.0.0.1:3306)/demo?charset=utf8&parseTime=true&loc=Local")
 	if err != nil {
 		panic(err)
 	}

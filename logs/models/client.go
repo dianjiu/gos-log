@@ -76,6 +76,29 @@ func UpdateClient(client *TClient) (int64, error) {
 }
 
 //ChangeClientStatus 更新客户端，先查后改
+func ChangeClientOnline(id int64) (int64, error) {
+	o := orm.NewOrm()
+	c := TClient{}
+	c.Id = id
+	err := o.Read(&c)
+	if o.Read(&c) == nil {
+		/* if "1" == c.Online {
+			c.Online = "0"
+		} else {
+			c.Online = "1"
+		} */
+		c.Online = "1"
+		c.UpdatedTime = time.Now()
+		// 修改操作，返回值为受影响的行数
+		if num, err := o.Update(&c, "Online", "UpdatedTime"); err == nil {
+			fmt.Println("update return num : ", num)
+			return num, err
+		}
+	}
+	return 0, err
+}
+
+//ChangeClientStatus 更新客户端，先查后改
 func ChangeClientStatus(id int64) (int64, error) {
 	o := orm.NewOrm()
 	c := TClient{}
@@ -118,7 +141,8 @@ func CheckClient(ip, port, vkey string) (client TClient) {
 	client.Ip = ip
 	client.Port = port
 	client.Vkey = vkey
-	err := o.Read(&client)
+	// err := o.Read(&client)
+	_, err := o.QueryTable("t_client").Filter("ip", ip).Filter("port", port).Filter("vkey", vkey).All(&client)
 	if err == orm.ErrNoRows {
 		fmt.Println("查询不到")
 	} else if err == orm.ErrMissPK {

@@ -80,15 +80,21 @@ func ReadString(filename string, key string, line int64) (file string) {
 		log.Fatalf("open file failed, err:%v", err)
 	}
 	bufWriter := bufio.NewWriter(dstFile)
+	f1, _ := os.Open(filename)
+	defer f1.Close()
+	r1 := bufio.NewReader(f1)
 	for {
-		str, err := r.ReadString('\n')
+		str, err := r1.ReadString('\n')
 		start = start + 1
 		if err != nil {
 			break
 		}
-		// TODO 没有考虑lineOver 小于 over 的时候
+		// 暂不考虑lineOver 小于 over 的时候
 		if start >= lineBegin && start <= lineOver {
 			bufWriter.WriteString(str)
+		}
+		if start > lineOver {
+			break
 		}
 	}
 	bufWriter.Flush()

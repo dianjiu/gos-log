@@ -3,6 +3,7 @@ package routers
 import (
 	"logc/controllers"
 	"logc/controllers/file"
+	"logc/controllers/register"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
@@ -18,4 +19,5 @@ func init() {
 	}))
 	beego.Router("/", &controllers.MainController{})
 	beego.Router("/file/query", &file.FileController{}, "*:Query")
+	beego.Router("/register", &register.RegisterController{}, "*:Register")
 }

@@ -11,10 +11,10 @@ func init() {
 	//初始化数据链接
 	db := models.DBConfig{
 		Host:         "127.0.0.1",
-		Port:         "5432",
-		Username:     "postgres",
+		Port:         "3306",
+		Username:     "root",
 		Password:     "123456",
-		Database:     "logs",
+		Database:     "demo",
 		MaxIdleConns: 10,
 		MaxOpenConns: 50,
 	}

@@ -91,7 +91,7 @@ func (this *ClientController) Register() {
 	addr := req.RemoteAddr // "IP:port"
 	s := strings.Split(addr, ":")
 	ip := s[0]
-	port := s[1]
+	port := "2020"
 	// 获取请求参数
 	var register Register
 	reqBody := this.Ctx.Input.RequestBody
@@ -100,7 +100,7 @@ func (this *ClientController) Register() {
 		//根据ip、port、vkey查询客户端的有效性
 		client := models.CheckClient(ip, port, register.VKey)
 		if client.Id != 0 {
-			models.ChangeClientStatus(client.Id)
+			models.ChangeClientOnline(client.Id)
 		}
 	}
 	data := ClientResp{"200", "客户端上线成功", models.TClient{}}

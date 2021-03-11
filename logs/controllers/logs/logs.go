@@ -78,6 +78,7 @@ func (this *LogsController) Query() {
 				path := item.LogPath + item.LogPrefix + logs.Date + item.LogSuffix + ".log"
 				// path := "C:\\logs\\server.2021-01-04.log"
 				//通过Http调用客户端
+				// go getLog(url, path, logs.Key, temppath, client.Ip, logs.Line)
 				req := httplib.Post(url).Debug(true)
 				req.JSONBody(map[string]interface{}{"path": path, "key": logs.Key, "line": logs.Line})
 				req.ToFile(temppath + "/" + logs.Key + "/" + client.Ip + ".zip")
@@ -87,6 +88,14 @@ func (this *LogsController) Query() {
 		// this.Ctx.WriteString("好了")
 		this.Ctx.Output.Download(temppath + "/" + logs.Key + ".zip")
 	}
+}
+
+//getLog
+func getLog(url, path, key, temppath, ip string, line int64) {
+	//通过Http调用客户端
+	req := httplib.Post(url).Debug(true)
+	req.JSONBody(map[string]interface{}{"path": path, "key": key, "line": line})
+	req.ToFile(temppath + "/" + key + "/" + ip + ".zip")
 }
 
 func (this *LogsController) QueryClient() {

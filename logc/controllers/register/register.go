@@ -4,8 +4,13 @@ import (
 	"log"
 	"os"
 
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/httplib"
 )
+
+type RegisterController struct {
+	beego.Controller
+}
 
 type Resp struct {
 	//必须的大写开头
@@ -13,17 +18,21 @@ type Resp struct {
 	Msg  string `json:"msg"`
 }
 
-func Register(server string, vKey string) {
-	log.Printf("Local client registered successfully.")
+func (this *RegisterController) Register() {
+	server := beego.AppConfig.String("logs")
+	vKey := beego.AppConfig.String("key")
+	registerLocalIp(server, vKey)
+	// log.Printf("Local client registered successfully.")
 }
 
-func RegisterLocalIp(server string, vKey string) {
-	var result Resp
+func registerLocalIp(server string, vKey string) {
 	//通过Http调用客户端
-	req := httplib.Post(server + "/client/register").Debug(true)
+	req := httplib.Post("http://" + server + "/client/register").Debug(true)
 	req.JSONBody(map[string]interface{}{"key": vKey})
-	req.ToJson(&result)
-	if result.Code == "200" {
+	_, err := req.String()
+	if err != nil {
+		log.Printf("Local client registered error.")
+	} else {
 		log.Printf("Local client registered successfully.")
 	}
 	os.Exit(0)
