@@ -13,8 +13,8 @@ func init() {
 	sqluser := beego.AppConfig.String("sqluser")
 	sqlpwd := beego.AppConfig.String("sqlpwd")
 	database := beego.AppConfig.String("database")
-	maxIdleConns,_ := beego.AppConfig.Int("maxIdleConns")
-	maxOpenConns,_ := beego.AppConfig.Int("maxOpenConns")
+	maxIdleConns, _ := beego.AppConfig.Int("maxIdleConns")
+	maxOpenConns, _ := beego.AppConfig.Int("maxOpenConns")
 	//初始化数据链接
 	db := models.DBConfig{
 		Host:         sqlhost,

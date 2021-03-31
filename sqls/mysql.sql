@@ -9,6 +9,7 @@ CREATE TABLE t_client(
     info VARCHAR(32)    COMMENT '备注' ,
     zip VARCHAR(32)   DEFAULT 1 COMMENT '压缩 0-不压缩1-压缩' ,
     status VARCHAR(1)   DEFAULT 0 COMMENT '状态 0-无效1-有效' ,
+    online VARCHAR(1)   DEFAULT 0 COMMENT '状态 0-离线1-在线' ,
     created_by VARCHAR(32)    COMMENT '创建人' ,
     created_time DATETIME    COMMENT '创建时间' ,
     updated_by VARCHAR(32)    COMMENT '更新人' ,
