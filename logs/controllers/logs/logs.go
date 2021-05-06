@@ -100,7 +100,11 @@ func (this *LogsController) Query() {
 				req.ToFile(temppath + "/" + logs.Key + "/" + client.Ip + ".zip") */
 			}
 		}
-		defer Zip(temppath+"/"+logs.Key+".zip", temppath+"/"+logs.Key+"/")
+		Zip(temppath+"/"+logs.Key+".zip", temppath+"/"+logs.Key+"/")
+		defer func() {
+			//返回后清理压缩文件
+			os.Remove(temppath + "/" + logs.Key + ".zip")
+		}()
 		// this.Ctx.WriteString("好了")
 		this.Ctx.Output.Download(temppath + "/" + logs.Key + ".zip")
 	}
@@ -203,6 +207,8 @@ func Zip(dst, src string) (err error) {
 		if err := zw.Close(); err != nil {
 			log.Fatalln(err)
 		}
+		//压缩成功后 删除原文件
+		os.Remove(src)
 	}()
 
 	// 下面来将文件写入 zw ，因为有可能会有很多个目录及文件，所以递归处理

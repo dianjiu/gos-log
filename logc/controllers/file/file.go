@@ -34,6 +34,10 @@ func (this *FileController) Query() {
 	if err == nil {
 		file := ReadString(file.Path, file.Key, file.Line)
 		// file := ReadString("c:/logs/server.2021-01-04.log", "b77ee6ba0b4cdd28", 1000)
+		defer func() {
+			//返回后清理压缩文件
+			os.Remove(file)
+		}()
 		this.Ctx.Output.Download(file)
 	}
 }
@@ -169,6 +173,8 @@ func Zip(dst, src string) (err error) {
 		if err := zw.Close(); err != nil {
 			log.Fatalln(err)
 		}
+		//压缩成功后 删除原文件
+		os.Remove(src)
 	}()
 
 	// 下面来将文件写入 zw ，因为有可能会有很多个目录及文件，所以递归处理
