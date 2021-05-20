@@ -70,13 +70,14 @@ func (this *LogsController) Query() {
 			//通过Http调用客户端
 			req := httplib.Post(url).Debug(true)
 			req.JSONBody(map[string]interface{}{"path": path, "key": logs.Key, "line": logs.Line})
-			req.ToFile(temppath + "/" + logs.Key + "/" + client.Ip + ".zip")
+			req.ToFile(temppath + logs.Key + "/" + client.Ip + ".zip")
 		} else {
 			//获取所有客户端遍历
 			clients, _ := models.QueryAllClient()
 			fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "多客户端并发查询开始了")
 			done := make(chan bool)
 			data := make(chan int)
+			wg.Add(len(clients))
 			go func() {
 				wg.Wait()
 				close(data)
@@ -84,8 +85,8 @@ func (this *LogsController) Query() {
 			go outClient(data, done)
 			// for _, client := range clients {
 			for i := 0; i < len(clients); i++ {
-				wg.Add(1)
-				gotoClient(data, done, i, clients[i], logs, temppath)
+				//wg.Add(1)
+				go gotoClient(data, done, i, clients[i], logs, temppath)
 				// 根据客户端ID查在线的客户端服务IP:Port
 				/* url := "http://" + client.Ip + ":" + client.Port + "/file/query"
 				// url := "http://localhost:2020/file/query"
@@ -99,6 +100,7 @@ func (this *LogsController) Query() {
 				req.JSONBody(map[string]interface{}{"path": path, "key": logs.Key, "line": logs.Line})
 				req.ToFile(temppath + "/" + logs.Key + "/" + client.Ip + ".zip") */
 			}
+			<-done
 		}
 		Zip(temppath+"/"+logs.Key+".zip", temppath+"/"+logs.Key+"/")
 		defer func() {
@@ -117,9 +119,11 @@ func outClient(data chan int, done chan bool) {
 		fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "调用客户端"+i+"结束")
 	}
 	done <- true
+	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "多客户端并发查询结束了")
 }
 
 func gotoClient(data chan int, done chan bool, i int, client models.TClient, logs LogsReq, temppath string) {
+	defer wg.Done()
 	x := strconv.Itoa(i)
 	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "调用客户端"+x+"开始")
 	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), client)
@@ -131,9 +135,8 @@ func gotoClient(data chan int, done chan bool, i int, client models.TClient, log
 	//通过Http调用客户端
 	req := httplib.Post(url).Debug(true)
 	req.JSONBody(map[string]interface{}{"path": path, "key": logs.Key, "line": logs.Line})
-	req.ToFile(temppath + "/" + logs.Key + "/" + client.Ip + ".zip")
+	req.ToFile(temppath + logs.Key + "/" + client.Ip + ".zip")
 	data <- i
-	defer wg.Done()
 }
 
 //getLog
