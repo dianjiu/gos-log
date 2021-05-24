@@ -42,7 +42,7 @@ var wg sync.WaitGroup
 //Console 控制台
 func (this *LogsController) Index() {
 	//this.Ctx.WriteString("这是正则路由 user/test")
-	this.TplName = "logs.html"
+	//this.TplName = "logs.html"
 }
 
 func (this *LogsController) Query() {
@@ -109,6 +109,10 @@ func (this *LogsController) Query() {
 			os.RemoveAll(temppath + "/" + logs.Key + "/")
 		}()
 		// this.Ctx.WriteString("好了")
+		defer func() {
+			//返回后清理压缩文件
+			os.Remove(temppath + "/" + logs.Key + ".zip")
+		}()
 		this.Ctx.Output.Download(temppath + "/" + logs.Key + ".zip")
 	}
 }
