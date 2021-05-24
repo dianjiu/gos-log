@@ -105,6 +105,7 @@ func (this *LogsController) Query() {
 		defer func() {
 			//返回后清理压缩文件
 			os.Remove(temppath + "/" + logs.Key + ".zip")
+			os.RemoveAll(temppath + "/" + logs.Key + "/")
 		}()
 		this.Ctx.Output.Download(temppath + "/" + logs.Key + ".zip")
 	}
