@@ -1,7 +1,7 @@
 package models
 
 import (
-	"fmt"
+	"log"
 	"time"
 
 	"github.com/astaxie/beego/orm"
@@ -36,9 +36,9 @@ func AddClient(client *TClient) (int64, error) {
 	id, err := o.Insert(client)
 	if err != nil {
 		// log.Info("insert client err : ", err)
-		fmt.Println("insert client err : ", err)
+		log.Println("insert client err : ", err)
 	}
-	fmt.Println("id :", id)
+	log.Println("id :", id)
 	return id, err
 }
 
@@ -68,7 +68,7 @@ func UpdateClient(client *TClient) (int64, error) {
 		c.UpdatedTime = time.Now()
 		// 修改操作，返回值为受影响的行数
 		if num, err := o.Update(&c); err == nil {
-			fmt.Println("update return num : ", num)
+			log.Println("update return num : ", num)
 			return num, err
 		}
 	}
@@ -91,7 +91,7 @@ func ChangeClientOnline(id int64) (int64, error) {
 		c.UpdatedTime = time.Now()
 		// 修改操作，返回值为受影响的行数
 		if num, err := o.Update(&c, "Online", "UpdatedTime"); err == nil {
-			fmt.Println("update return num : ", num)
+			log.Println("update return num : ", num)
 			return num, err
 		}
 	}
@@ -113,7 +113,7 @@ func ChangeClientStatus(id int64) (int64, error) {
 		c.UpdatedTime = time.Now()
 		// 修改操作，返回值为受影响的行数
 		if num, err := o.Update(&c, "Status", "UpdatedTime"); err == nil {
-			fmt.Println("update return num : ", num)
+			log.Println("update return num : ", num)
 			return num, err
 		}
 	}
@@ -126,11 +126,11 @@ func ReadClient(id int64) (client TClient) {
 	client.Id = id
 	err := o.Read(&client)
 	if err == orm.ErrNoRows {
-		fmt.Println("查询不到")
+		log.Println("查询不到")
 	} else if err == orm.ErrMissPK {
-		fmt.Println("找不到主键")
+		log.Println("找不到主键")
 	} else {
-		fmt.Println(client)
+		log.Println(client)
 	}
 	return client
 }
@@ -144,11 +144,11 @@ func CheckClient(ip, port, vkey string) (client TClient) {
 	// err := o.Read(&client)
 	_, err := o.QueryTable("t_client").Filter("ip", ip).Filter("port", port).Filter("vkey", vkey).All(&client)
 	if err == orm.ErrNoRows {
-		fmt.Println("查询不到")
+		log.Println("查询不到")
 	} else if err == orm.ErrMissPK {
-		fmt.Println("找不到主键")
+		log.Println("找不到主键")
 	} else {
-		fmt.Println(client)
+		log.Println(client)
 	}
 	return client
 }
@@ -161,7 +161,7 @@ func QueryAllClient() ([]TClient, error) {
 	//查找全部
 	_, err := o.QueryTable("t_client").All(&clients)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return nil, err
 	}
 	return clients, nil

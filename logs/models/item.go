@@ -1,7 +1,7 @@
 package models
 
 import (
-	"fmt"
+	"log"
 	"time"
 
 	"github.com/astaxie/beego/orm"
@@ -35,9 +35,9 @@ func AddItem(item *TItem) (int64, error) {
 	// 插入一条数据，返回自增 id
 	id, err := o.Insert(item)
 	if err != nil {
-		fmt.Println("insert item err : ", err)
+		log.Println("insert item err : ", err)
 	}
-	fmt.Println("id :", id)
+	log.Println("id :", id)
 	return id, err
 }
 
@@ -67,7 +67,7 @@ func UpdateItem(item *TItem) (int64, error) {
 		c.UpdatedTime = time.Now()
 		// 修改操作，返回值为受影响的行数
 		if num, err := o.Update(&c); err == nil {
-			fmt.Println("update return num : ", num)
+			log.Println("update return num : ", num)
 			return num, err
 		}
 	}
@@ -89,7 +89,7 @@ func ChangeItemStatus(id int64) (int64, error) {
 		c.UpdatedTime = time.Now()
 		// 修改操作，返回值为受影响的行数
 		if num, err := o.Update(&c, "Status", "UpdatedTime"); err == nil {
-			fmt.Println("update return num : ", num)
+			log.Println("update return num : ", num)
 			return num, err
 		}
 	}
@@ -102,11 +102,11 @@ func ReadItem(id int64) (item TItem) {
 	item.Id = id
 	err := o.Read(&item)
 	if err == orm.ErrNoRows {
-		fmt.Println("查询不到")
+		log.Println("查询不到")
 	} else if err == orm.ErrMissPK {
-		fmt.Println("找不到主键")
+		log.Println("找不到主键")
 	} else {
-		fmt.Println(item)
+		log.Println(item)
 	}
 	return item
 }
@@ -118,7 +118,7 @@ func QueryItemsByClientId(id int64) (*[]TItem, error) {
 	//查找全部
 	_, err := o.QueryTable("t_item").Filter("client_id", id).All(items)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return nil, err
 	}
 	return items, nil
@@ -131,7 +131,7 @@ func QueryAllItem() (*[]TItem, error) {
 	//查找全部
 	_, err := o.QueryTable("t_item").All(items)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return nil, err
 	}
 	return items, nil
