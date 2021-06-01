@@ -92,11 +92,11 @@ func (this *UserController) Login() {
 }
 
 // Index 首页
-func (this *UserController) Index() {
+/*func (this *UserController) Index() {
 	user_name := this.GetSession("username")
 	this.Data["username"] = user_name
 	this.TplName = "index.html"
-}
+}*/
 
 // Exit 推出登陆
 func (this *UserController) Exit() {

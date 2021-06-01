@@ -2,7 +2,7 @@ package client
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	models "logs/models"
 	"strings"
 	"time"
@@ -33,10 +33,10 @@ type Register struct {
 	VKey string `json:"key"`
 }
 
-//Console 控制台
+/*//Console 控制台
 func (this *ClientController) Index() {
 	this.TplName = "client.html"
-}
+}*/
 
 func (this *ClientController) Add() {
 	var client models.TClient
@@ -49,7 +49,7 @@ func (this *ClientController) Add() {
 		client.UpdatedBy = "admin"
 		client.UpdatedTime = time.Now()
 		id, err := models.AddClient(&client)
-		fmt.Printf("ID: %d, ERR: %v\n", id, err)
+		log.Println("ID: %d, ERR: %v\n", id, err)
 		data := ClientResp{"200", "客户端新增成功", models.TClient{}}
 		this.Data["json"] = &data
 		this.ServeJSON()

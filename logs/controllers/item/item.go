@@ -2,7 +2,7 @@ package item
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	models "logs/models"
 	"time"
 
@@ -28,9 +28,9 @@ type ItemResp struct {
 }
 
 //Console 控制台
-func (this *ItemController) Index() {
+/*func (this *ItemController) Index() {
 	this.TplName = "item.html"
-}
+}*/
 
 func (this *ItemController) Add() {
 	var item models.TItem
@@ -42,7 +42,7 @@ func (this *ItemController) Add() {
 		item.UpdatedBy = "admin"
 		item.UpdatedTime = time.Now()
 		id, err := models.AddItem(&item)
-		fmt.Printf("ID: %d, ERR: %v\n", id, err)
+		log.Println("ID: %d, ERR: %v\n", id, err)
 		data := ItemResp{"200", "项目日志新增成功", models.TItem{}}
 		this.Data["json"] = &data
 		this.ServeJSON()

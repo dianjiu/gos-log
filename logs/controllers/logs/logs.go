@@ -3,7 +3,6 @@ package logs
 import (
 	"archive/zip"
 	"encoding/json"
-	"fmt"
 	"io"
 	"log"
 	models "logs/models"
@@ -40,10 +39,10 @@ type LogsResp struct {
 var wg sync.WaitGroup
 
 //Console 控制台
-func (this *LogsController) Index() {
+/*func (this *LogsController) Index() {
 	//this.Ctx.WriteString("这是正则路由 user/test")
 	//this.TplName = "logs.html"
-}
+}*/
 
 func (this *LogsController) Query() {
 	var logs LogsReq
@@ -74,7 +73,7 @@ func (this *LogsController) Query() {
 		} else {
 			//获取所有客户端遍历
 			clients, _ := models.QueryAllClient()
-			fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "多客户端并发查询开始了")
+			log.Println(time.Now().Format("2006-01-02 15:04:05"), "多客户端并发查询开始了")
 			done := make(chan bool)
 			data := make(chan int)
 			wg.Add(len(clients))
@@ -115,17 +114,17 @@ func (this *LogsController) Query() {
 func outClient(data chan int, done chan bool) {
 	for x := range data {
 		i := strconv.Itoa(x)
-		fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "调用客户端"+i+"结束")
+		log.Println(time.Now().Format("2006-01-02 15:04:05"), "调用客户端"+i+"结束")
 	}
 	done <- true
-	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "多客户端并发查询结束了")
+	log.Println(time.Now().Format("2006-01-02 15:04:05"), "多客户端并发查询结束了")
 }
 
 func gotoClient(data chan int, done chan bool, i int, client models.TClient, logs LogsReq, temppath string) {
 	defer wg.Done()
 	x := strconv.Itoa(i)
-	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), "调用客户端"+x+"开始")
-	fmt.Println(time.Now().Format("2006-01-02 15:04:05"), client)
+	log.Println(time.Now().Format("2006-01-02 15:04:05"), "调用客户端"+x+"开始")
+	log.Println(time.Now().Format("2006-01-02 15:04:05"), client)
 	// 根据客户端ID查在线的客户端服务IP:Port
 	url := "http://" + client.Ip + ":" + client.Port + "/file/query"
 	// 根据项目ID查日志路径、前缀、后缀，拼接日志全路径
@@ -259,7 +258,7 @@ func Zip(dst, src string) (err error) {
 			return
 		}
 		// 输出压缩的内容
-		fmt.Printf("成功压缩文件： %s, 共写入了 %d 个字符的数据\n", path, n)
+		log.Println("成功压缩文件： %s, 共写入了 %d 个字符的数据\n", path, n)
 
 		return nil
 	})
@@ -313,7 +312,7 @@ func UnZip(dst, src string) (err error) {
 		}
 
 		// 将解压的结果输出
-		fmt.Printf("成功解压 %s ，共写入了 %d 个字符的数据\n", path, n)
+		log.Println("成功解压 %s ，共写入了 %d 个字符的数据\n", path, n)
 
 		// 因为是在循环中，无法使用 defer ，直接放在最后
 		// 不过这样也有问题，当出现 err 的时候就不会执行这个了，
