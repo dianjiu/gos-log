@@ -2,7 +2,6 @@ package register
 
 import (
 	"log"
-	"os"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/httplib"
@@ -21,19 +20,19 @@ type Resp struct {
 func (this *RegisterController) Register() {
 	server := beego.AppConfig.String("logs")
 	vKey := beego.AppConfig.String("key")
-	registerLocalIp(server, vKey)
+	RegisterLocalIp(server, vKey)
 	// log.Printf("Local client registered successfully.")
 }
 
-func registerLocalIp(server string, vKey string) {
+func RegisterLocalIp(server string, vKey string) {
 	//通过Http调用客户端
 	req := httplib.Post("http://" + server + "/client/register").Debug(true)
 	req.JSONBody(map[string]interface{}{"key": vKey})
 	_, err := req.String()
+	log.Printf("logc register url=%v param=%v errMsg=%v\n", "http://"+server+"/client/register", vKey, err)
 	if err != nil {
 		log.Printf("Local client registered error.")
 	} else {
 		log.Printf("Local client registered successfully.")
 	}
-	os.Exit(0)
 }
