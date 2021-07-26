@@ -30,13 +30,13 @@
 
 ## 演示截图
 ### 登陆页
-![登陆页](./logs/static/img/login.jpg "登陆页")  
+![login](https://gitee.com/dianjiu/typora-imgs/raw/master/imgs/20210726105153.jpg)
 ### 客户端
-![客户端](./logs/static/img/client.jpg "客户端")  
+![client](https://gitee.com/dianjiu/typora-imgs/raw/master/imgs/20210726105216.jpg)
 ### 项目管理
-![项目管理](./logs/static/img/item.jpg "项目管理")  
+![item](https://gitee.com/dianjiu/typora-imgs/raw/master/imgs/20210726105243.jpg)
 ### 日志查找
-![日志查找](./logs/static/img/logs.jpg "日志查找")  
+![logs](https://gitee.com/dianjiu/typora-imgs/raw/master/imgs/20210726105257.jpg)
 
 ## 性能测试
 
