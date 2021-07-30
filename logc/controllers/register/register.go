@@ -17,6 +17,7 @@ type Resp struct {
 	Msg  string `json:"msg"`
 }
 
+// Register Local client registered by local app.conf
 func (this *RegisterController) Register() {
 	server := beego.AppConfig.String("logs")
 	vKey := beego.AppConfig.String("key")
@@ -24,6 +25,14 @@ func (this *RegisterController) Register() {
 	// log.Printf("Local client registered successfully.")
 }
 
+// CheckOnline Online interface for logs detection
+func (this *RegisterController) CheckOnline() {
+	data := Resp{"200", "客户端在线"}
+	this.Data["json"] = &data
+	this.ServeJSON()
+}
+
+// RegisterLocalIp Automatically register the client at startup
 func RegisterLocalIp(server string, vKey string) {
 	//通过Http调用客户端
 	req := httplib.Post("http://" + server + "/client/register").Debug(true)
