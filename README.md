@@ -1,15 +1,20 @@
-## gos-log
+gos-log
+
 基于Go语言的轻量级高性能的大日志检索系统
 
 ## 开源地址
 
-### gos-log
+### gos-log   
+
+![star](https://gitee.com/dianjiu/gos-log/badge/star.svg?theme=white)  ![star](https://gitee.com/dianjiu/gos-log/badge/fork.svg?theme=white)  ![GitHub watchers](https://img.shields.io/github/watchers/dianjiu/gos-log-vue?style=social)    ![GitHub Repo stars](https://img.shields.io/github/stars/dianjiu/gos-log?style=social)  ![GitHub forks](https://img.shields.io/github/forks/dianjiu/gos-log?style=social)
 
 [https://gitee.com/dianjiu/gos-log](https://gitee.com/dianjiu/gos-log)  
 
 [https://github.com/dianjiu/gos-log](https://github.com/dianjiu/gos-log)  
 
 ### gos-log-vue
+
+![star](https://gitee.com/dianjiu/gos-log-vue/badge/star.svg?theme=white)  ![star](https://gitee.com/dianjiu/gos-log-vue/badge/fork.svg?theme=white)  ![GitHub watchers](https://img.shields.io/github/watchers/dianjiu/gos-log-vue?style=social)  ![GitHub Repo stars](https://img.shields.io/github/stars/dianjiu/gos-log-vue?style=social)  ![GitHub forks](https://img.shields.io/github/forks/dianjiu/gos-log-vue?style=social)
 
 [https://gitee.com/dianjiu/gos-log-vue](https://gitee.com/dianjiu/gos-log-vue)  
 
