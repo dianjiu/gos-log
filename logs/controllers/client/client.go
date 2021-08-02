@@ -100,7 +100,11 @@ func (this *ClientController) Register() {
 		//根据ip、port、vkey查询客户端的有效性
 		client := models.CheckClient(ip, port, register.VKey)
 		if client.Id != 0 {
-			models.ChangeClientOnline(client.Id)
+			c := models.TClient{}
+			c.Id = client.Id
+			c.Online = "1"
+			//models.ChangeClientOnline(client.Id)
+			models.ChangeClientOnline(&c)
 		}
 	}
 	data := ClientResp{"200", "客户端上线成功", models.TClient{}}
