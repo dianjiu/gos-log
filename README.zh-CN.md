@@ -1,5 +1,5 @@
 <p align="center">
-	<a href="https://goslog.dianjiu.org.cn/"><img src="https://dianjiu.co/gotool.jpg" width="45%"></a>
+	<a href="https://goslog.dianjiu.org.cn/"><img src="https://dianjiu.co/goslog.jpg" width="45%"></a>
 </p>
 <p align="center">
 	<strong>轻量级高性能的大日志检索系统</strong>
