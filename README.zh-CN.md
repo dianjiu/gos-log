@@ -30,7 +30,7 @@
 账号：admin  
 密码：admin
 
-## 演示截图
+## 演示
 ### 登陆页
 ![login](https://gitee.com/dianjiu/typora-imgs/raw/master/imgs/20210726105153.jpg)
 ### 客户端
@@ -40,7 +40,7 @@
 ### 日志查找
 ![logs](https://gitee.com/dianjiu/typora-imgs/raw/master/imgs/20210726105257.jpg)
 
-## 性能测试
+## 性能
 
 ### **系统硬件**
 
@@ -91,13 +91,13 @@ Gos Log的源码分为两个分支，功能如下：
 
 邮件联系 dianjiu@dianjiu.cc 获取开发者账号
 
-## Star Gos Log
+## Star
 [![Giteye chart](https://chart.giteye.net/gitee/dianjiu/gos-log/96MG4Z3C.png)](https://giteye.net/chart/96MG4Z3C)
 
 [![Stargazers over time](https://starchart.cc/dianjiu/gos-log.svg)](https://starchart.cc/dianjiu/gos-log)
 
 
-## 关于作者
+## 关于
 
 ### 点九先生
 
