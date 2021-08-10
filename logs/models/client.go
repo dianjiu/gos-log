@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/orm"
-	_ "github.com/lib/pq"
 )
 
 /**
@@ -76,10 +75,10 @@ func UpdateClient(client *TClient) (int64, error) {
 }
 
 //ChangeClientStatus 更新客户端，先查后改
-func ChangeClientOnline(id int64) (int64, error) {
+func ChangeClientOnline(client *TClient) (int64, error) {
 	o := orm.NewOrm()
 	c := TClient{}
-	c.Id = id
+	c.Id = client.Id
 	err := o.Read(&c)
 	if o.Read(&c) == nil {
 		/* if "1" == c.Online {
@@ -87,7 +86,7 @@ func ChangeClientOnline(id int64) (int64, error) {
 		} else {
 			c.Online = "1"
 		} */
-		c.Online = "1"
+		c.Online = client.Online
 		c.UpdatedTime = time.Now()
 		// 修改操作，返回值为受影响的行数
 		if num, err := o.Update(&c, "Online", "UpdatedTime"); err == nil {

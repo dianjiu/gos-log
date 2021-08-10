@@ -96,7 +96,6 @@ func ReadString(filename string, key string, line int64) (file string) {
 					lineFirst = lineBegin
 					lineOver = lineFirst + line
 					log.Printf("lineFirst:%d\n", lineFirst)
-					log.Printf("lineFirst:%d\n", lineFirst)
 					log.Printf("lineBegin:%d\n", lineBegin)
 					log.Printf("lineOver:%d\n", lineOver)
 				}

@@ -1,10 +1,12 @@
 package main
 
 import (
+	"logs/controllers/task"
 	models "logs/models"
 	_ "logs/routers"
 
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/toolbox"
 )
 
 func init() {
@@ -33,8 +35,13 @@ func init() {
 		MaxOpenConns: 50, */
 	}
 	models.NewDef(&db)
+	//初始化定时任务
+	task.InitTask()
 }
 
 func main() {
+	//定时任务启动
+	toolbox.StartTask()
+	defer toolbox.StopTask()
 	beego.Run()
 }
